@@ -1,13 +1,17 @@
 let fullScreen = false;
 let bullet;
 let v1;
-
+let framerate = 60; // Useful for calculating the bullet lifespan in seconds
 let bullets = new Array();
+let player;
 
 function setup() {
     createCanvas(displayWidth, displayHeight);
     // translate(displayWidth/2, displayHeight/2)
     angleMode(DEGREES);
+    frameRate(framerate);
+
+    player = new Player(createVector(30, 30));
 }
 
 
@@ -16,22 +20,22 @@ function draw() {
     background(220);
 
     for(let b=0; b < bullets.length; b++) {
-        bullets[b].update()
+        if (bullets[b].getDist() >= bullets[b].maxDistance) {
+            bullets.splice(b, 1);
+        } else {
+            bullets[b].update()
+        }
+        
+        
     }
-    // let v0 = createVector(50, 50);
-    // v1 = createVector(mouseX - 50, mouseY - 50);
-    // drawArrow(v0, v1, 'black');
-    // let myHeading = v1.heading();
-    
 }
-
 
 function mouseReleased() {
     if (!fullscreen()) {
         fullscreen(true);
     }
 
-    bullets.push(new Bullet(null, createVector(mouseX, mouseY), createVector(random(0, width), random(0, height))));
+    bullets.push(new Bullet(null, player.pos, null, 150));
 }
 
 function drawArrow(base, vec, myColor) {
