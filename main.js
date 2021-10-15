@@ -1,59 +1,51 @@
 let fullScreen = false;
-let bullet;
-let v1;
-let framerate = 60; // Useful for calculating the bullet lifespan in seconds
-let bullets = new Array();
-let player;
-let aimVector;
+let bullets = new Array(); // Contains both player and enemy bullets
+let player; // Player object
+let game;
 
 function setup() {
-    createCanvas(displayWidth, displayHeight);
-    // translate(displayWidth/2, displayHeight/2)
-    // angleMode(DEGREES);
-    frameRate(framerate);
+    game = createCanvas(displayWidth, displayHeight);
     player = new Player(createVector(30, 30));
     aimVector = createVector(0, 0);
+    noStroke();    
 }
 
-
 function draw() {
-    noStroke();
+    // Blit screen
     background(220);
 
+    // Update the player
     player.update()
 
+    // Loop through bullets, delete bullet if it has exceeded or is equal to it's maximum distance; otherwise update it
     for(let b=0; b < bullets.length; b++) {
         if (bullets[b].getDist() >= bullets[b].maxDistance) {
             bullets.splice(b, 1);
         } else {
             bullets[b].update()
         }
-        
-        
-        
     }
+}
 
-    aimVector.set(mouseX - player.pos.x, mouseY - player.pos.y).normalize();
+function mousePressed() {
+    if (player.selected === "rifle") {
+        player.shootBullet();
+    }
 }
 
 function mouseReleased() {
-    // if (!fullscreen()) {
-    //     fullscreen(true);
-    // }
+    
+    if (player.selected === "pistol") {
+        player.shootBullet();
+    }
 
-    bullets.push(new Bullet(null, player.pos, aimVector, 500));
+    if (!fullscreen()) {
+        fullscreen(true);
+    }
 }
 
-function drawArrow(base, vec, myColor) {
-    push();
-    stroke(myColor);
-    strokeWeight(3);
-    fill(myColor);
-    translate(base.x, base.y);
-    line(0, 0, vec.x, vec.y);
-    rotate(vec.heading());
-    let arrowSize = 7;
-    translate(vec.mag() - arrowSize, 0);
-    triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
-    pop();
-}  
+function keyReleased() {
+    if (!fullscreen()) {
+        fullscreen(true);
+    }
+}

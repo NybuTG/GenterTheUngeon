@@ -1,5 +1,5 @@
 class Bullet {
-    constructor(sprite, pos, direction, maxDistance) {
+    constructor(sprite, pos, direction, maxDistance, playerOwned=true) {
         /**
          * sprite: The sprite is the bullet image
          * pos: The position is a vector of the start position of the bullet
@@ -11,12 +11,14 @@ class Bullet {
         this.start = pos.copy();
         this.pos = pos.copy();
         this.maxDistance = maxDistance;
-        this.direction = direction.copy().mult(4);
+        this.direction = direction.copy().mult(7);
+        this.playerOwned = playerOwned;
     }
 
     update() {
         this.draw();
         this.pos.add(this.direction);
+
     }
 
     draw() {
