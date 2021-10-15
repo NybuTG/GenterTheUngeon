@@ -10,14 +10,13 @@ class Bullet {
         this.sprite = sprite;
         this.start = pos.copy();
         this.pos = pos.copy();
-        this.direction = createVector(0.5, 1);
         this.maxDistance = maxDistance;
+        this.direction = p5.Vector.fromAngle(direction).copy().mult(4);
     }
 
     update() {
         this.draw();
         this.pos.add(this.direction);
-        // this.direction.mult(deltaTime/40);
     }
 
     draw() {
