@@ -4,16 +4,15 @@ let v1;
 let framerate = 60; // Useful for calculating the bullet lifespan in seconds
 let bullets = new Array();
 let player;
-let mouseVector;
-
+let aimVector;
 
 function setup() {
     createCanvas(displayWidth, displayHeight);
     // translate(displayWidth/2, displayHeight/2)
     // angleMode(DEGREES);
     frameRate(framerate);
-    mouseVector = createVector(mouseX, mouseY).normalize();
     player = new Player(createVector(30, 30));
+    aimVector = createVector(0, 0);
 }
 
 
@@ -34,17 +33,15 @@ function draw() {
         
     }
 
-    mouseVector.x = mouseX;
-    mouseVector.y = mouseY;
-    mouseVector.normalize();
+    aimVector.set(mouseX - player.pos.x, mouseY - player.pos.y).normalize();
 }
 
 function mouseReleased() {
-    if (!fullscreen()) {
-        fullscreen(true);
-    }
+    // if (!fullscreen()) {
+    //     fullscreen(true);
+    // }
 
-    bullets.push(new Bullet(null, player.pos, player.pos.angleBetween(mouseVector), 500));
+    bullets.push(new Bullet(null, player.pos, aimVector, 500));
 }
 
 function drawArrow(base, vec, myColor) {

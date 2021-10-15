@@ -11,7 +11,7 @@ class Bullet {
         this.start = pos.copy();
         this.pos = pos.copy();
         this.maxDistance = maxDistance;
-        this.direction = p5.Vector.fromAngle(direction).copy().mult(4);
+        this.direction = direction.copy().mult(4);
     }
 
     update() {

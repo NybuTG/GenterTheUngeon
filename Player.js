@@ -18,6 +18,7 @@ class Player {
             this.pos.y += this.speed;
         }
 
+        // A & D
         if (keyIsDown(65)) {
             this.pos.x -= this.speed;
         } else if (keyIsDown(68)) {
