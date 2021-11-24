@@ -2,12 +2,21 @@ let fullScreen = false;
 let bullets = new Array(); // Contains both player and enemy bullets
 let player; // Player object
 let game;
+let enemies = new Array();
+
+// Disable right click menu
+document.addEventListener('contextmenu', event => event.preventDefault());
 
 function setup() {
     game = createCanvas(displayWidth, displayHeight);
     player = new Player(createVector(30, 30));
-    aimVector = createVector(0, 0);
+
+    for (let i=0; i < 10; i++) {
+        enemies.push(new Enemy(null, createVector(random(displayWidth), random(displayHeight)), player, i));
+    }
+
     noStroke();    
+       
 }
 
 function draw() {
@@ -25,27 +34,25 @@ function draw() {
             bullets[b].update()
         }
     }
-}
 
-function mousePressed() {
-    if (player.selected === "rifle") {
-        player.shootBullet();
+    for (let i=0; i < enemies.length; i++) {
+        enemies[i].update(enemies);
     }
 }
 
-function mouseReleased() {
-    
-    if (player.selected === "pistol") {
+function mousePressed(event) {
+    if (event.button === 0) {
         player.shootBullet();
     }
 
-    if (!fullscreen()) {
-        fullscreen(true);
+    if (event.button === 2 && player.hasCooldown === false) {
+        player.dash = true;
     }
 }
 
-function keyReleased() {
-    if (!fullscreen()) {
-        fullscreen(true);
-    }
-}
+function mouseReleased() { 
+    if (!fullscreen()) { 
+        fullscreen(true); 
+    } 
+} 
+

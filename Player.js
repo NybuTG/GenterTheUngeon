@@ -1,4 +1,5 @@
 class Player {
+
     constructor(pos) {
         // Copy is required to avoid it accidentally updating the parent (Can be quite bad)
         this.pos = pos.copy();
@@ -15,8 +16,15 @@ class Player {
         this.aimVector = createVector(0, 0);
 
         // Weapon system
-        this.weapons = ["pistol", "rifle"];
-        this.selected = this.weapons[1];
+
+
+        // Dash system
+        this.cooldown = 0;
+        this.hasCooldown = false;
+        this.dashtime = 0;
+        this.dash = false;
+        this.dashtimeAmount = 150;
+        this.cooldownTime = 750;
     }
 
     update() {
@@ -28,7 +36,32 @@ class Player {
         circle(this.pos.x, this.pos.y, 30);
 
         // Update the aim vector
-        this.aimVector.set(mouseX - player.pos.x, mouseY - player.pos.y).normalize();    
+        this.aimVector.set(mouseX - this.pos.x, mouseY - this.pos.y).normalize();    
+
+        if (this.dash === true) {
+            this.speed = 10;
+            this.dashtime += deltaTime;
+
+            // Dash lasts 500ms
+            if (this.dashtime >= this.dashtimeAmount) {
+                // Reset and start cooldown
+                this.dashtime = 0;
+                this.hasCooldown = true;
+                this.dash = false;
+                this.speed = 4;
+            }
+        }
+
+        if (this.hasCooldown === true) {
+            this.cooldown += deltaTime;
+            // Cooldown = 500ms
+            if (this.cooldown >= this.cooldownTime) {
+
+                // Make player ready to do dash again
+                this.hasCooldown = false;
+                this.cooldown = 0;
+            }
+        }
     }
 
     eventCheck() {

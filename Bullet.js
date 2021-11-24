@@ -22,7 +22,6 @@ class Bullet {
     }
 
     draw() {
-        // noStroke();
         fill("green");
         circle(this.pos.x, this.pos.y, 20);
     }
