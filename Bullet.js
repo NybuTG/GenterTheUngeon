@@ -17,6 +17,7 @@ class Bullet {
 
     update() {
         this.draw();
+        this.hitsPlayer();
         this.pos.add(this.direction);
 
     }
@@ -28,5 +29,15 @@ class Bullet {
 
     getDist() {
         return this.start.dist(this.pos);
+    }
+
+    hitsPlayer() {
+        if (!this.playerOwned) {
+            if (this.pos.x >= game.player.x && this.pos.x <= game.player.x + game.player.bbox[0] &&
+                this.pos.y >= game.player.y && this.player.y <= game.player.y + game.player.bbox[1]) {
+                    game.player.health--;
+            }
+        }
+
     }
 }

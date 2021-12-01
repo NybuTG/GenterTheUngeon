@@ -1,9 +1,13 @@
 class Player {
 
-    constructor(pos) {
+    constructor(pos, bullets) {
         // Copy is required to avoid it accidentally updating the parent (Can be quite bad)
         this.pos = pos.copy();
         
+
+        // Get bullets from the game class
+        this.bullets = bullets;
+
         // Movement speed
         // TODO: Update to vector
         this.speed = 4;
@@ -15,7 +19,6 @@ class Player {
         // The aim vector is a vector between ((-1, 1), (-1, 1)). It is made from a radius around the player
         this.aimVector = createVector(0, 0);
 
-        // Weapon system
 
 
         // Dash system
@@ -25,6 +28,11 @@ class Player {
         this.dash = false;
         this.dashtimeAmount = 150;
         this.cooldownTime = 750;
+
+        this.health = 6;
+
+        // TODO: Change to sprite w&h
+        this.bbox = [30, 60];
     }
 
     update() {
@@ -33,7 +41,7 @@ class Player {
 
         // Placeholder character, lookin' shiny
         fill('red');
-        circle(this.pos.x, this.pos.y, 30);
+        rect(this.pos.x, this.pos.y, this.bbox[0], this.bbox[1]);
 
         // Update the aim vector
         this.aimVector.set(mouseX - this.pos.x, mouseY - this.pos.y).normalize();    
@@ -81,6 +89,6 @@ class Player {
     }
 
     shootBullet() {
-        bullets.push(new Bullet(null, this.pos, this.aimVector, 500));
+         bullets.push(new Bullet(null, this.pos, this.aimVector, 500));
     }
 }

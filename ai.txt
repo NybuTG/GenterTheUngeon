@@ -1,9 +1,0 @@
-every frame:
-    line from enemy to player
-    check if distance < x
-
-    if more:
-        walk towards player
-
-    take shot
-
