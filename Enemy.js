@@ -35,7 +35,7 @@ class Enemy {
 
         } else {
 
-            if (this.lastShot >= 250) {
+            if (this.lastShot >= 1000) {
                 this.shoot()
                 this.lastShot = 0;
             } else {

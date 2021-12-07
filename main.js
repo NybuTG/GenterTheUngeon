@@ -4,9 +4,16 @@ let player; // Player object
 let canvas;
 let enemies = new Array();
 let game;
+let titleFont;
+let font;
 
 // Disable right click menu
 document.addEventListener('contextmenu', event => event.preventDefault());
+
+function preload() {
+    titleFont = loadFont("assets/alagard.ttf");
+    font = loadFont("assets/windows_command_prompt.ttf");
+}
 
 function setup() {
     canvas = createCanvas(displayWidth, displayHeight);

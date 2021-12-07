@@ -12,7 +12,7 @@ class Game {
 
 
         
-        this.player = new Player(createVector(30, 30), this.bullets);
+        this.player = new Player(createVector(30, displayHeight/2), this.bullets);
 
         // for( let i=0; i < 10; i++) {
         //     this.enemies.push(new Enemy(null,
@@ -28,11 +28,12 @@ class Game {
     startscreen() {
         push();
         background(220);
-        textFont("Comic Sans MS");
-        textSize(15);
+        textFont(titleFont);
+        textSize(46);
         textAlign(CENTER,TOP);
-        fill("Red");
-        text("hi",displayWidth/2,displayHeight/2);
+        fill("black");
+        text("Welcome to Gungeons and Dragguns. To start press any key.\n To move around use the WASD keys.\n To shoot press the left mouse button.\n To dodge use the right mouse button."
+        ,displayWidth/2,displayHeight/2);
         pop();
     }
 
@@ -69,41 +70,58 @@ class Game {
     }
 
     gameOver() {
-
+        background("red");
+        textFont(font);
+        textSize(displayHeight/2);
+        text("YOU DIED",displayWidth/2,displayHeight/2);
     }
-
+    drawPlayerHealth() {
+        textFont(font);
+        textSize(18);
+        fill("black");
+        text(this.player.health, 30, 30)
+    }
     draw() {
         if (!this.gameActive) {
             this.startscreen();
         }
+        
         else {
             if(this.gameEnd){
                 this.gameOver();
             }
-        else {
-            // Blit screen
-            background(220);
-            this.level();
-            // Update the player
-            this.player.update()
-            
-            // Loop through bullets, delete bullet if it has exceeded or is equal to it's maximum distance; otherwise update it
-            for(let b=0; b < bullets.length; b++) {
-                if (bullets[b].getDist() >= bullets[b].maxDistance) {
-                    bullets.splice(b, 1);
-                } else {
-                    bullets[b].update()
-                }
-            }
-        
-            for (let i=0; i < enemies.length; i++) {
-                this.enemies[i].update();
-            }
-            if ( enemies.length == 0) {
-            
-            }
-        }  
+            else {
+                // Blit screen
+                background(220);
+                this.level();
+                // Update the player
+                this.player.update()
 
-     }
+                // Draw health
+                this.drawPlayerHealth();
+
+                // Loop through bullets, delete bullet if it has exceeded or is equal to it's maximum distance; otherwise update it
+                for(let b=0; b < bullets.length; b++) {
+                    if (bullets[b].getDist() >= bullets[b].maxDistance) {
+                        bullets.splice(b, 1);
+                    } else {
+                        bullets[b].update()
+                        if (bullets[b].hits(this.player.pos) && !bullets[b].playerOwned) {
+                            this.player.health--;
+                        }
+                    }
+                }
+        
+                for (let i=0; i < enemies.length; i++) {
+                    this.enemies[i].update();
+                }
+                if ( enemies.length == 0 && this.player.pos.x == displayWidth-30 && this.player.pos.y == displayHeight/2) {
+                    this.levels += 1;
+                    this.player.pos.x == 30;
+                    this.player.pos.y == displayHeight/2;
+                }
+            }  
+
+        }
     }
 }

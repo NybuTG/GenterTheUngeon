@@ -17,7 +17,7 @@ class Bullet {
 
     update() {
         this.draw();
-        this.hitsPlayer();
+        // this.hitsPlayer();
         this.pos.add(this.direction);
 
     }
@@ -31,13 +31,10 @@ class Bullet {
         return this.start.dist(this.pos);
     }
 
-    hitsPlayer() {
-        if (!this.playerOwned) {
-            if (this.pos.x >= game.player.x && this.pos.x <= game.player.x + game.player.bbox[0] &&
-                this.pos.y >= game.player.y && this.player.y <= game.player.y + game.player.bbox[1]) {
-                    game.player.health--;
-            }
+    hits(pos) {
+        if (this.pos.dist(pos) < 5) {
+            console.log("Pew pew");
+            return true;
         }
-
     }
 }
