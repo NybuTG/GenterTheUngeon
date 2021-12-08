@@ -33,6 +33,9 @@ class Player {
 
         // TODO: Change to sprite w&h
         this.bbox = [30, 60];
+        
+        this.lastShot = 0;
+
     }
 
     update() {
@@ -89,6 +92,13 @@ class Player {
     }
 
     shootBullet() {
-         bullets.push(new Bullet(null, this.pos, this.aimVector, 500));
+        // if (this.lastShot >= 650) {
+            pistolSound.play();
+            bullets.push(new Bullet(null, createVector(this.pos.x + 15, this.pos.y + 30), this.aimVector, 600));    
+             this.lastShot = 0;
+        // } else {
+        //     this.lastShot += deltaTime;
+        // }
+
     }
 }

@@ -32,8 +32,8 @@ class Bullet {
     }
 
     hits(pos) {
-        if (this.pos.dist(pos) < 5) {
-            console.log("Pew pew");
+        // Circumvent weird copy bug
+        if (this.pos.dist(createVector(pos.x, pos.y)) < 15) {
             return true;
         }
     }

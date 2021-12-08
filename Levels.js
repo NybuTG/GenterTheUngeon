@@ -41,21 +41,22 @@ class Game {
         this.gameEnd = false;
         this.gameActive = true;
         this.enemies = new Array();
-        
+        this.game = new Game(game);
     }
 
     level() {
-        if(this.levels == 0){
-            for( let i=0; i < 10; i++) {
+        if(this.levels >= 1){
+            for( let i=0; i < 2; i++) {
                 this.enemies.push(new Enemy(null,
                     createVector(
-                        random(displayWidth), 
-                        random(displayHeight)
+                        round(random(displayWidth)), 
+                        round(random(displayHeight))
                     ),
                     this.player
-                    ));
+                ));
+                    
             }
-            if(this.levels >= 1){
+            if(this.levels >= 2){
                 for( let i=0;i < 5; i++) {
                     this.enemies.push(new Enemy(null,
                         createVector(
@@ -63,16 +64,32 @@ class Game {
                             random(displayHeight)
                         ),
                         this.player
-                        ));
+                    ));
+                    
+                }
+            }
+
+            if(this.levels >= 3){
+                for( let i=0;i < this.levels; i++) {
+                    this.enemies.push(new Enemy(null,
+                        createVector(
+                            random(displayWidth),
+                            random(displayHeight)
+                        ),
+                        this.player
+                    ));
+                    
                 }
             }
         }
     }
 
     gameOver() {
-        background("red");
+        background("black");
         textFont(font);
-        textSize(displayHeight/2);
+        textSize(200);
+        fill("red");
+        textAlign(CENTER)
         text("YOU DIED",displayWidth/2,displayHeight/2);
     }
     drawPlayerHealth() {
@@ -93,7 +110,6 @@ class Game {
             else {
                 // Blit screen
                 background(220);
-                this.level();
                 // Update the player
                 this.player.update()
 
@@ -108,18 +124,41 @@ class Game {
                         bullets[b].update()
                         if (bullets[b].hits(this.player.pos) && !bullets[b].playerOwned) {
                             this.player.health--;
+                            bullets.splice(b, 1);
+                        }
+
+                        for (let e = 0; e < this.enemies.length; e++) {
+                            if (bullets[b].hits(this.enemies[e].pos) && bullets[b].playerOwned) {
+                                this.enemies[e].health--;
+                                bullets.splice(b, 1);
+                            }
+                            
                         }
                     }
                 }
         
-                for (let i=0; i < enemies.length; i++) {
-                    this.enemies[i].update();
+                for (let i=0; i < this.enemies.length; i++) {
+                    
+                    if (this.enemies[i].health <= 0) {
+                        this.enemies.splice(i, 1)
+                        
+                    } else {
+                        this.enemies[i].update();
+                    }
+                    
+
+
                 }
-                if ( enemies.length == 0 && this.player.pos.x == displayWidth-30 && this.player.pos.y == displayHeight/2) {
+                if ( this.enemies.length == 0 && this.player.pos.x >  displayWidth - 50) {
                     this.levels += 1;
-                    this.player.pos.x == 30;
-                    this.player.pos.y == displayHeight/2;
+                    this.player.pos.x = 30;
+                    this.player.pos.y = displayHeight/2;
+                    this.level();
                 }
+                if (this.player.health <= 0) {
+                    this.gameOver();
+                }
+                
             }  
 
         }
