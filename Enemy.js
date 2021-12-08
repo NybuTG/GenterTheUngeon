@@ -1,21 +1,23 @@
 class Enemy {
-    constructor(sprite, pos, player, index) {
-	this.sprite = sprite;
-	this.pos = pos;
+    constructor(sprite, pos, player) {
+        this.sprite = sprite;
+        this.pos = pos;
         this.playerDir = createVector(0, 0);
         this.player = player;
         this.speed = 2;
-        
+           
         this.cooldown = 1000;
         this.lastShot = 0;
 
-        this.index = index;
+        this.maxRange = random(200, 300);
 
-        this.maxRange = random(300, 500);
+        this.health = 2;
+        
+        
     }
 
-    update(enemies) {
-        
+    update() {
+
         this.playerDir.set(this.player.pos.x - this.pos.x, 
                          this.player.pos.y - this.pos.y).normalize();
 
@@ -35,7 +37,7 @@ class Enemy {
 
         } else {
 
-            if (this.lastShot >= 250) {
+            if (this.lastShot >= 650) {
                 this.shoot()
                 this.lastShot = 0;
             } else {

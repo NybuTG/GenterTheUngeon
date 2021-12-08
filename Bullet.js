@@ -17,6 +17,7 @@ class Bullet {
 
     update() {
         this.draw();
+        // this.hitsPlayer();
         this.pos.add(this.direction);
 
     }
@@ -28,5 +29,12 @@ class Bullet {
 
     getDist() {
         return this.start.dist(this.pos);
+    }
+
+    hits(pos) {
+        // Circumvent weird copy bug
+        if (this.pos.dist(createVector(pos.x, pos.y)) < 15) {
+            return true;
+        }
     }
 }
