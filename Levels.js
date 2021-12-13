@@ -12,7 +12,7 @@ class Game {
 
 
         
-        this.player = new Player(createVector(30, displayHeight/2), this.bullets);
+        this.player = new Player(createVector(70, displayHeight/2), this.bullets);
 
         // for( let i=0; i < 10; i++) {
         //     this.enemies.push(new Enemy(null,
@@ -45,7 +45,7 @@ class Game {
     }
 
     level() {
-        if(this.levels >= 1){
+        if(this.levels >= 0){
             for( let i=0; i < 2; i++) {
                 this.enemies.push(new Enemy(null,
                     createVector(
@@ -56,7 +56,7 @@ class Game {
                 ));
                     
             }
-            if(this.levels >= 2){
+            if(this.levels >= 1){
                 for( let i=0;i < 5; i++) {
                     this.enemies.push(new Enemy(null,
                         createVector(
@@ -69,8 +69,8 @@ class Game {
                 }
             }
 
-            if(this.levels >= 3){
-                for( let i=0;i < this.levels; i++) {
+            if(this.levels >= 2){
+                for( let i=0;i < this.levels*2; i++) {
                     this.enemies.push(new Enemy(null,
                         createVector(
                             random(displayWidth),
@@ -81,6 +81,17 @@ class Game {
                     
                 }
             }
+            if(this.levels == 5){
+                for( let i=0;i < 30; i++) {
+                    this.enemies.push(new Enemy(null,
+                        createVector(
+                            random(displayWidth),
+                            random(displayHeight)
+                        ),
+                        this.player
+                    ));
+                }
+            }
         }
     }
 
@@ -89,14 +100,29 @@ class Game {
         textFont(font);
         textSize(200);
         fill("red");
-        textAlign(CENTER)
+        textAlign(CENTER);
         text("YOU DIED",displayWidth/2,displayHeight/2);
     }
-    drawPlayerHealth() {
+    gameWin() {
+        background("green");
         textFont(font);
-        textSize(18);
+        textSize(100);
         fill("black");
-        text(this.player.health, 30, 30)
+        textAlign(CENTER);
+        text("Congratulations!",displayWidth/2,displayHeight/2);
+    }
+    drawPlayerHealth() {
+        push();
+        for(let i = 0; i<this.player.health; i++) {
+            image(healthSprite, 30, 20)
+            translate(45,0);
+
+        }
+        pop();
+        // textFont(font);
+        // textSize(18);
+        // fill("black");
+        // text(this.player.health, 30, 30)
     }
     draw() {
         if (!this.gameActive) {
@@ -110,6 +136,7 @@ class Game {
             else {
                 // Blit screen
                 background(220);
+                background(backgroundSprite)
                 // Update the player
                 this.player.update()
 
@@ -151,12 +178,17 @@ class Game {
                 }
                 if ( this.enemies.length == 0 && this.player.pos.x >  displayWidth - 50) {
                     this.levels += 1;
-                    this.player.pos.x = 30;
+                    this.player.pos.x = 70;
                     this.player.pos.y = displayHeight/2;
                     this.level();
                 }
+                if (this.levels == 6){
+                    this.gameWin();
+                    this.gameEnd = true;
+                }
                 if (this.player.health <= 0) {
                     this.gameOver();
+                    this.gameEnd = true;
                 }
                 
             }  
