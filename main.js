@@ -10,6 +10,9 @@ let pistolSound;
 let healthSprite;
 let backgroundSprite
 
+let bullet_sprites = new Array();
+
+let animFrame = 0;
 
 // Disable right click menu
 document.addEventListener('contextmenu', event => event.preventDefault());
@@ -23,6 +26,11 @@ function preload() {
 
     healthSprite = loadImage("assets/heart.png");
     backgroundSprite = loadImage("assets/background.png");
+
+    // Load bullet enemy sprites
+    for (let i=0; i < 6; i++) {
+        bullet_sprites.push(loadImage("assets/bullet_enemy/bullet_" + i + ".png"));
+    }
 }
 
 function setup() {
@@ -34,6 +42,11 @@ function setup() {
 }
 
 function draw() {
+    // Slower animations
+    if (frameCount % 10 == 0) {
+        animFrame++;
+    }
+
     game.draw();
 }
 

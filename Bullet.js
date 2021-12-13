@@ -32,8 +32,7 @@ class Bullet {
     }
 
     hits(pos) {
-        // Circumvent weird copy bug
-        if (this.pos.dist(createVector(pos.x, pos.y)) < 15) {
+        if (this.pos.dist(pos) < 30) {
             return true;
         }
     }

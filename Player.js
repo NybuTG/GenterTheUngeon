@@ -28,6 +28,7 @@ class Player {
         this.dash = false;
         this.dashtimeAmount = 150;
         this.cooldownTime = 750;
+        this.damageCooldown = 750;
 
         this.health = 6;
 
@@ -50,8 +51,10 @@ class Player {
         this.aimVector.set(mouseX - this.pos.x, mouseY - this.pos.y).normalize();    
 
         if (this.dash === true) {
+            this.damageCooldown = 500;
             this.speed = 10;
             this.dashtime += deltaTime;
+
 
             // Dash lasts 500ms
             if (this.dashtime >= this.dashtimeAmount) {
@@ -72,6 +75,14 @@ class Player {
                 this.hasCooldown = false;
                 this.cooldown = 0;
             }
+        }
+
+        if (this.damageCooldown > 0) {
+            this.damageCooldown -= deltaTime;
+        }
+
+        if (this.damageCooldown < 0) {
+            this.damageCooldown = 0;
         }
     }
 
