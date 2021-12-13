@@ -15,6 +15,8 @@ class Enemy {
         
         this.walking = false;
         this.shootingSpeed = 650
+
+        this.current = this.sprite[animFrame % 6];
     }
 
     update() {
@@ -50,22 +52,20 @@ class Enemy {
                 this.lastShot += deltaTime;
             }
         }
-        
-
-
-        fill('blue');
 
         if (this.walking) {
-            let current = this.sprite[animFrame % 6]
-            image(current, this.pos.x, this.pos.y, current.width / 4, current.height / 4)
+            this.current = this.sprite[animFrame % 6];
+            // console.log(current);
+            image(this.current, this.pos.x, this.pos.y, this.current.width / 4, this.current.height / 4);
         } else {
-            let current = this.sprite[1]
-            image(current, this.pos.x, this.pos.y, current.width / 4, current.height / 4)
+            this.current = this.sprite[1];
+            image(this.current, this.pos.x, this.pos.y, this.current.width / 4, this.current.height / 4);
         }
     }
     
 
     shoot() {
+        pistolSound.play();
         bullets.push(new Bullet(null, this.pos, this.playerDir, 500, false));
     }
 }
@@ -76,9 +76,8 @@ class ShotgunEnemy extends Enemy {
     }
 
     shoot() {
+        shotgunSound.play();
         for (let i=-3; i < 5; i++) {
-            console.log("shotgun pew pew")
-            // 0 * something = 0, add small marging to get 3 bullets
             bullets.push(new Bullet(null, this.pos, this.playerDir.copy().rotate(i * 0.125 + 0.01), 500, false));
         }
     }
@@ -93,9 +92,8 @@ class BossEnemy extends Enemy {
     }
 
     shoot() {
+        shotgunSound.play();
         for (let i=0; i < 50; i++) {
-            console.log("shotgun pew pew")
-            // 0 * something = 0, add small marging to get 3 bullets
             bullets.push(new Bullet(null, this.pos, this.playerDir.copy().rotate(i * 0.125 + 0.01), 500, false));
         }
     }

@@ -13,6 +13,9 @@ let backgroundSprite
 let bullet_sprites = new Array();
 let player_sprites = new Array();
 let shotgun_sprites = new Array();
+let boss_sprites = new Array();
+
+let retardis;
 
 let animFrame = 0;
 
@@ -29,15 +32,14 @@ function preload() {
     healthSprite = loadImage("assets/heart.png");
     backgroundSprite = loadImage("assets/background.png");
 
+    retardis = loadImage("assets/retardis.png");
+
     // Load bullet enemy and player sprites (all 6 frames)
     for (let i=0; i < 6; i++) {
         bullet_sprites.push(loadImage("assets/bullet_enemy/bullet_" + i + ".png"));
         shotgun_sprites.push(loadImage("assets/shotgun_enemy/shotgun_" + i + ".png"));
         player_sprites.push(loadImage("assets/player/player_" + i + ".png"));
-    }
-
-    for (let i=0; i < 9; i++) {
-        dash_sprites.push(loadImage("assets/player/dodge_" + i + ".png"));
+        boss_sprites.push(loadImage("assets/boss_enemy/boss_" + i + ".png"));
     }
 }
 
@@ -59,13 +61,17 @@ function draw() {
 }
 
 function mousePressed(event) {
-    if (event.button === 0) {
-        game.player.shootBullet();
+
+    if (game.gameActive) {
+        if (event.button === 0) {
+            game.player.shootBullet();
+        }
+    
+        if (event.button === 2 && game.player.hasCooldown === false) {
+            game.player.dash = true;
+        }
     }
 
-    if (event.button === 2 && game.player.hasCooldown === false) {
-        game.player.dash = true;
-    }
 }
 
 function mouseReleased() { 

@@ -32,6 +32,7 @@ class Game {
     }
 
     level() {
+
         if(this.levels >= 0){
             for(let i=0; i < 2; i++) {
                 this.enemies.push(new Enemy(bullet_sprites,
@@ -58,15 +59,17 @@ class Game {
         }
 
         if(this.levels >= 2){
-            this.enemies.push(new Enemy(bullet_sprites,
-                createVector(
-                    random(displayWidth),
-                    random(displayHeight)
-                ),
-                this.player
-            ));
+            for(let i=0; i < this.levels*2.5; i++){
+                this.enemies.push(new Enemy(bullet_sprites,
+                    createVector(
+                        random(displayWidth),
+                        random(displayHeight)
+                    ),
+                    this.player
+                ));
+                }
 
-            for (let i=0; i < 2; i++) {
+            for (let i=0; i < this.levels; i++) {
                 this.enemies.push(new ShotgunEnemy(shotgun_sprites,
                     createVector(
                         random(displayWidth),
@@ -78,7 +81,7 @@ class Game {
         }
 
         if(this.levels == 5){
-            this.enemies.push(new BossEnemy(bullet_sprites, createVector(displayWidth / 2, displayHeight / 2), this.player));
+            this.enemies.push(new BossEnemy(boss_sprites, createVector(displayWidth / 2, displayHeight / 2), this.player));
         }
     }
 
@@ -112,6 +115,8 @@ class Game {
         pop();
     }
     draw() {
+
+
         if (!this.gameActive) {
             this.startscreen();
         }
@@ -124,9 +129,22 @@ class Game {
                 // Blit screen
                 background(220);
                 background(backgroundSprite)
+
+                if (this.levels == 0) {
+                    image(retardis, 100, 100, 175, 175);
+                    fill("white");
+                    textAlign(CENTER);
+                    textFont(titleFont);
+                    textSize(30);
+                    text("This is your Recreational Taris, or >ReTardis< for your short.\nWith it you can travel through dimensions, at least when there arent any hostiles that steal your parts....", displayWidth / 2, 500);
+
+                    textFont(font);
+                    textSize(20);
+                    text("Kill all the enemies (Like an absolute savage),\nwalk to the end of the room,\nand progress your way to the boss, who is holding your parts hostage (How rude!)", displayWidth / 2, 600);
+                }
+
                 // Update the player
                 this.player.update()
-
                 // Draw health
                 this.drawPlayerHealth();
 
