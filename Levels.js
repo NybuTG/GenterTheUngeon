@@ -45,7 +45,7 @@ class Game {
     }
 
     level() {
-        if(this.levels >= 1){
+        if(this.levels >= 0){
             for( let i=0; i < 2; i++) {
                 this.enemies.push(new Enemy(null,
                     createVector(
@@ -56,7 +56,7 @@ class Game {
                 ));
                     
             }
-            if(this.levels >= 2){
+            if(this.levels >= 1){
                 for( let i=0;i < 5; i++) {
                     this.enemies.push(new Enemy(null,
                         createVector(
@@ -69,8 +69,8 @@ class Game {
                 }
             }
 
-            if(this.levels >= 3){
-                for( let i=0;i < this.levels; i++) {
+            if(this.levels >= 2){
+                for( let i=0;i < this.levels*2; i++) {
                     this.enemies.push(new Enemy(null,
                         createVector(
                             random(displayWidth),
@@ -81,6 +81,17 @@ class Game {
                     
                 }
             }
+            if(this.levels == 5){
+                for( let i=0;i < 30; i++) {
+                    this.enemies.push(new Enemy(null,
+                        createVector(
+                            random(displayWidth),
+                            random(displayHeight)
+                        ),
+                        this.player
+                    ));
+                }
+            }
         }
     }
 
@@ -89,14 +100,30 @@ class Game {
         textFont(font);
         textSize(200);
         fill("red");
-        textAlign(CENTER)
+        textAlign(CENTER);
         text("YOU DIED",displayWidth/2,displayHeight/2);
     }
-    drawPlayerHealth() {
+    gameWin() {
+        background("green");
         textFont(font);
-        textSize(18);
+        textSize(100);
         fill("black");
-        text(this.player.health, 30, 30)
+        textAlign(CENTER);
+        text("Congratulations!",displayWidth/2,displayHeight/2);
+    }
+    drawPlayerHealth() {
+        push();
+        for(let i = 0; i<this.player.health; i++) {
+            fill("red");
+            ellipse(30,30,30,30);
+            translate(60,0);
+
+        }
+        pop();
+        // textFont(font);
+        // textSize(18);
+        // fill("black");
+        // text(this.player.health, 30, 30)
     }
     draw() {
         if (!this.gameActive) {
@@ -155,8 +182,14 @@ class Game {
                     this.player.pos.y = displayHeight/2;
                     this.level();
                 }
+                if (this.levels == 5){
+                    this.gameWin();
+                    this.gameEnd = true;
+                    this.new();
+                }
                 if (this.player.health <= 0) {
                     this.gameOver();
+                    this.gameEnd = true;
                 }
                 
             }  
