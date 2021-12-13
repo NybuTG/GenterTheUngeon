@@ -66,7 +66,7 @@ class Enemy {
 
     shoot() {
         pistolSound.play();
-        bullets.push(new Bullet(null, this.pos, this.playerDir, 500, false));
+        bullets.push(new Bullet(bullet_entity, this.pos, this.playerDir, 500, false));
     }
 }
 
@@ -78,7 +78,7 @@ class ShotgunEnemy extends Enemy {
     shoot() {
         shotgunSound.play();
         for (let i=-3; i < 5; i++) {
-            bullets.push(new Bullet(null, this.pos, this.playerDir.copy().rotate(i * 0.125 + 0.01), 500, false));
+            bullets.push(new Bullet(bullet_entity, this.pos, this.playerDir.copy().rotate(i * 0.125 + 0.01), 500, false));
         }
     }
 }
@@ -94,7 +94,7 @@ class BossEnemy extends Enemy {
     shoot() {
         shotgunSound.play();
         for (let i=0; i < 50; i++) {
-            bullets.push(new Bullet(null, this.pos, this.playerDir.copy().rotate(i * 0.125 + 0.01), 500, false));
+            bullets.push(new Bullet(bullet_entity, this.pos, this.playerDir.copy().rotate(i * 0.125 + 0.01), 500, false));
         }
     }
 
