@@ -12,7 +12,7 @@ class Game {
 
 
         
-        this.player = new Player(createVector(30, displayHeight/2), this.bullets);
+        this.player = new Player(createVector(70, displayHeight/2), this.bullets);
 
         // for( let i=0; i < 10; i++) {
         //     this.enemies.push(new Enemy(null,
@@ -114,9 +114,8 @@ class Game {
     drawPlayerHealth() {
         push();
         for(let i = 0; i<this.player.health; i++) {
-            fill("red");
-            ellipse(30,30,30,30);
-            translate(60,0);
+            image(healthSprite, 30, 20)
+            translate(45,0);
 
         }
         pop();
@@ -137,6 +136,7 @@ class Game {
             else {
                 // Blit screen
                 background(220);
+                background(backgroundSprite)
                 // Update the player
                 this.player.update()
 
@@ -178,14 +178,13 @@ class Game {
                 }
                 if ( this.enemies.length == 0 && this.player.pos.x >  displayWidth - 50) {
                     this.levels += 1;
-                    this.player.pos.x = 30;
+                    this.player.pos.x = 70;
                     this.player.pos.y = displayHeight/2;
                     this.level();
                 }
-                if (this.levels == 5){
+                if (this.levels == 6){
                     this.gameWin();
                     this.gameEnd = true;
-                    this.new();
                 }
                 if (this.player.health <= 0) {
                     this.gameOver();

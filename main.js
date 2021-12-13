@@ -7,6 +7,8 @@ let titleFont;
 let font;
 let shotgunSound;
 let pistolSound;
+let healthSprite;
+let backgroundSprite
 
 
 // Disable right click menu
@@ -16,8 +18,11 @@ function preload() {
     titleFont = loadFont("assets/alagard.ttf");
     font = loadFont("assets/windows_command_prompt.ttf");
 
-    shotgunSound = loadSound("assets/shotgun.wav")
-    pistolSound = loadSound("assets/pistol.wav")
+    shotgunSound = loadSound("assets/shotgun.wav");
+    pistolSound = loadSound("assets/pistol.wav");
+
+    healthSprite = loadImage("assets/heart.png");
+    backgroundSprite = loadImage("assets/background.png");
 }
 
 function setup() {
@@ -51,10 +56,11 @@ function keyTyped() {
     if (!game.gameActive) {
         game.gameActive = true;
     }
-
+    
     if (game.gameEnd) {
-        game.new();
-    }
+        setup();
+      }
+    
 
     if (!fullscreen()) { 
         fullscreen(true); 
