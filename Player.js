@@ -116,7 +116,7 @@ class Player {
 
     shootBullet() {
             pistolSound.play();
-            bullets.push(new Bullet(null, createVector(this.pos.x + 15, this.pos.y + 30), this.aimVector, 600));    
+            bullets.push(new Bullet(bullet_entity, createVector(this.pos.x + 15, this.pos.y + 30), this.aimVector, 600));    
             this.lastShot = 0;
     }
 }

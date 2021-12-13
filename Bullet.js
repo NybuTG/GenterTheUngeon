@@ -23,8 +23,7 @@ class Bullet {
     }
 
     draw() {
-        fill("green");
-        circle(this.pos.x, this.pos.y, 20);
+        image(this.sprite, this.pos.x, this.pos.y, 10, 10);
     }
 
     getDist() {

@@ -16,6 +16,7 @@ let shotgun_sprites = new Array();
 let boss_sprites = new Array();
 
 let retardis;
+let bullet_entity;
 
 let animFrame = 0;
 
@@ -33,6 +34,7 @@ function preload() {
     backgroundSprite = loadImage("assets/background.png");
 
     retardis = loadImage("assets/retardis.png");
+    bullet_entity = loadImage("assets/bullet_entity.png");
 
     // Load bullet enemy and player sprites (all 6 frames)
     for (let i=0; i < 6; i++) {
