@@ -9,7 +9,7 @@ class Game {
         this.enemies = new Array();
         this.levels = 0;
         
-        this.player = new Player(createVector(70, displayHeight/2), this.bullets);
+        this.player = new Player(player_sprites, createVector(70, displayHeight/2), this.bullets);
     }
 
     startscreen() {
@@ -34,55 +34,51 @@ class Game {
     level() {
         if(this.levels >= 0){
             for(let i=0; i < 2; i++) {
-                // this.enemies.push(new Enemy(bullet_sprites,
-                //     createVector(
-                //         round(random(displayWidth)), 
-                //         round(random(displayHeight))
-                //     ),
-                //     this.player
-                // ));
-                    
-            }
+                this.enemies.push(new Enemy(bullet_sprites,
+                    createVector(
+                        round(random(displayWidth)), 
+                        round(random(displayHeight))
+                    ),
+                    this.player
+                ));
+            }       
+        }
 
-            if(this.levels >= 1){
-                for(let i=0;i < 2; i++) {
-                    this.enemies.push(new Enemy(bullet_sprites,
-                        createVector(
-                            random(displayWidth),
-                            random(displayHeight)
-                        ),
-                        this.player
-                    ));
-                    
-                }
-
-                for (let i=0; i < 2; i++) {
-                    this.enemies.push(new ShotgunEnemy(bullet_sprites,
-                        createVector(
-                            random(displayWidth),
-                            random(displayHeight)
-                        ),
-                        this.player
-                    ));
-                }
+        if(this.levels >= 1){
+            for(let i=0;i < 2; i++) {
+                this.enemies.push(new Enemy(bullet_sprites,
+                    createVector(
+                        random(displayWidth),
+                        random(displayHeight)
+                    ),
+                    this.player
+                ));
+                
             }
+        }
 
-            if(this.levels >= 2){
-                for( let i=0;i < this.levels*2; i++) {
-                    this.enemies.push(new Enemy(bullet_sprites,
-                        createVector(
-                            random(displayWidth),
-                            random(displayHeight)
-                        ),
-                        this.player
-                    ));
-                    
-                }
-            }
+        if(this.levels >= 2){
+            this.enemies.push(new Enemy(bullet_sprites,
+                createVector(
+                    random(displayWidth),
+                    random(displayHeight)
+                ),
+                this.player
+            ));
 
-            if(this.levels == 5){
-                this.enemies.push(new BossEnemy(bullet_sprites, createVector(displayWidth / 2, displayHeight / 2), this.player));
+            for (let i=0; i < 2; i++) {
+                this.enemies.push(new ShotgunEnemy(shotgun_sprites,
+                    createVector(
+                        random(displayWidth),
+                        random(displayHeight)
+                    ),
+                    this.player
+                ));
             }
+        }
+
+        if(this.levels == 5){
+            this.enemies.push(new BossEnemy(bullet_sprites, createVector(displayWidth / 2, displayHeight / 2), this.player));
         }
     }
 
@@ -114,10 +110,6 @@ class Game {
 
         }
         pop();
-        // textFont(font);
-        // textSize(18);
-        // fill("black");
-        // text(this.player.health, 30, 30)
     }
     draw() {
         if (!this.gameActive) {
