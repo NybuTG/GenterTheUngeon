@@ -1,0 +1,1 @@
+Dit spel is gemaakt tijdens de middelbare als project voor het vak informatica. Het is volledig geschreven in p5.js aangezien dit de library was die we kregen tijdens de module. Het spel is een soort online namaak van Enter the Gungeon (De assets zijn dus ook niet zelf gemaakt, alleen de code), en is grotendeels OOP geschreven. 
